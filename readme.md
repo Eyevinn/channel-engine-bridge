@@ -1,4 +1,6 @@
-# {{Name}}
+# channel-engine-bridge
+
+Bridging Channel Engine vod2live to other distribution platforms
 
 <!--
 

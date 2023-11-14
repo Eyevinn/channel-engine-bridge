@@ -1,16 +1,30 @@
-# channel-engine-bridge
+# FAST Engine Bridge
 
-Bridging Channel Engine vod2live to other distribution platforms
-
-<!--
-
-## Requirements
-Add any external project dependencies such as node.js version etc here
+Bridging [Channel Engine vod2live](https://github.com/Eyevinn/docker-fast) to other distribution platforms.
 
 ## Installation / Usage
 
-Add clear instructions on how to use the project here
+To pull from a Channel Engine powered FAST channel and push to AWS MediaPackage.
 
+```
+docker run -d \
+  -e SOURCE=https://eyevinn.ce.prod.osaas.io/channels/demo/master.m3u8 \
+  -e DEST_TYPE=mediapackage \
+  -e DEST_URL=https://<username>:<password>@xxxxx.mediapackage.xxxxxx.amazonaws.com/in/v2/146950c8d69d45c7a20f2995803d622e/146950c8d69d45c7a20f2995803d622e/channel \
+  eyevinntechnology/fast-engine-bridge
+```
+
+or to push to AWS MediaStore.
+
+```
+docker run -d \
+  -e SOURCE=https://eyevinn.ce.prod.osaas.io/channels/demo/master.m3u8 \
+  -e DEST_TYPE=mediastore \
+  -e DEST_URL=https://xxxxxx.data.mediastore.xxxxxx.amazonaws.com/demo/ \
+  eyevinntechnology/fast-engine-bridge
+```
+
+<!--
 ## Development
 
 Add clear instructions on how to start development of the project here

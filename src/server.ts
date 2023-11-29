@@ -1,8 +1,9 @@
 import { HLSPullPush, VoidOutput } from '@eyevinn/hls-pull-push';
 import api from './api';
 import { MyLogger } from './logger';
+import { getOutputDest } from './output';
 
-const server = api({ title: 'channel-engine-brdige' });
+const server = api({ title: 'channel-engine-bridge' });
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8000;
 
@@ -25,15 +26,13 @@ server.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {
   );
 
   const pullPushService = new HLSPullPush(new MyLogger(process.env.NODE_ENV));
-  let outputDest;
-  if (destinationType == 'void') {
-    const voidOutputPlugin = new VoidOutput();
-    pullPushService.registerPlugin(destinationType, voidOutputPlugin);
-    outputDest = voidOutputPlugin.createOutputDestination(
-      undefined,
-      pullPushService.getLogger()
-    );
-  }
+  const outputDest = getOutputDest({
+    pullPushService,
+    destinationUrl: process.env.DEST_URL
+      ? new URL(process.env.DEST_URL)
+      : undefined,
+    destinationType
+  });
   if (outputDest) {
     const sessionId = pullPushService.startFetcher({
       name: 'default',

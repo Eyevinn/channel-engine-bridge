@@ -1,4 +1,4 @@
-import { ILogger } from '@eyevinn/hls-pull-push/types';
+import { ILogger } from '@eyevinn/hls-pull-push';
 import { Logger } from '@pieropatron/tinylogger';
 
 export class MyLogger implements ILogger {

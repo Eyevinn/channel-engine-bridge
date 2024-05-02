@@ -24,6 +24,29 @@ docker run -d \
   eyevinntechnology/fast-engine-bridge
 ```
 
+To push an MPEG-TS stream using SRT protocol
+
+```
+docker run -d \
+  -e SOURCE=https://eyevinn.ce.prod.osaas.io/channels/demo/master.m3u8 \
+  -e DEST_TYPE=stream \
+  -e DEST_URL="srt://0.0.0.0:9998?mode=listener" \
+  -p 9998:9998/udp \
+  eyevinntechnology/fast-engine-bridge
+```
+
+To view the MPEG-TS stream you can open VLC on address `srt://127.0.0.1:9998`
+
+To bridge a channel to an RTMP destination
+
+```
+docker run -d \
+  -e SOURCE=https://eyevinn.ce.prod.osaas.io/channels/demo/master.m3u8 \
+  -e DEST_TYPE=stream \
+  -e DEST_URL="rtmp://172.232.130.157:10503/live/abc123" \
+  eyevinntechnology/fast-engine-bridge
+```
+
 <!--
 ## Development
 

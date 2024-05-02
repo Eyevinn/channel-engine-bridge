@@ -1,6 +1,10 @@
 ARG NODE_IMAGE=node:18-alpine
 
 FROM ${NODE_IMAGE}
+USER root
+RUN apk update && \
+    apk upgrade && \
+    apk add ffmpeg
 ENV NODE_ENV=production
 EXPOSE 8000
 RUN mkdir /app

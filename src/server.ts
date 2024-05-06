@@ -35,7 +35,8 @@ server.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {
       name: 'default',
       url: source.toString(),
       destinationUrl: new URL(process.env.DEST_URL),
-      h264encoder: process.env.H264ENCODER
+      h264encoder: process.env.H264ENCODER,
+      overlay: process.env.OVERLAY
     });
   } else {
     const pullPushService = new HLSPullPush(new MyLogger(process.env.NODE_ENV));

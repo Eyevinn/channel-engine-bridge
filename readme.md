@@ -55,6 +55,18 @@ docker run -d \
   eyevinntechnology/fast-engine-bridge
 ```
 
+Add a logo overlay in MPEG-TS stream
+
+```
+docker run -d \
+  -e H264ENCODER=libx264 \
+  -e SOURCE=https://eyevinn.ce.prod.osaas.io/channels/demo/master.m3u8 \
+  -e OVERLAY=https://example.com/logo.png \
+  -e DEST_TYPE=stream \
+  -e DEST_URL="rtmp://172.232.130.157:10503/live/abc123" \
+  eyevinntechnology/fast-engine-bridge
+```
+
 <!--
 ## Development
 

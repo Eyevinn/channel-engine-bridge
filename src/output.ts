@@ -2,6 +2,7 @@ import {
   HLSPullPush,
   MediaPackageOutput,
   MediaStoreOutput,
+  S3BucketOutput,
   VoidOutput
 } from '@eyevinn/hls-pull-push';
 
@@ -61,6 +62,19 @@ export function getOutputDest({
         {
           dataEndpoint: destinationUrl.origin,
           folder: destinationUrl.pathname.replace(/\/$/, '')
+        },
+        pullPushService.getLogger()
+      );
+    }
+  } else if (destinationType == 's3') {
+    if (destinationUrl) {
+      pullPushService.getLogger().verbose(`${destinationUrl.toString()}`);
+      const s3Plugin = new S3BucketOutput();
+      pullPushService.registerPlugin(destinationType, s3Plugin);
+      outputDest = s3Plugin.createOutputDestination(
+        {
+          bucket: destinationUrl.hostname,
+          folder: destinationUrl.pathname.replace(/\/$/, '').replace(/^\//, '')
         },
         pullPushService.getLogger()
       );

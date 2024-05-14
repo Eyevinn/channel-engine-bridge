@@ -32,6 +32,16 @@ docker run -d \
   eyevinntechnology/fast-engine-bridge
 ```
 
+or to push to AWS S3 bucket.
+
+```
+docker run -d \
+  -e SOURCE=https://eyevinn.ce.prod.osaas.io/channels/demo/master.m3u8 \
+  -e DEST_TYPE=s3 \
+  -e DEST_URL=s3://my-bucket/demo/ \
+  eyevinntechnology/fast-engine-bridge
+```
+
 To push an MPEG-TS stream using SRT protocol
 
 ```

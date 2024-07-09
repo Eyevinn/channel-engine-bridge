@@ -5,6 +5,7 @@ import {
   S3BucketOutput,
   VoidOutput
 } from '@eyevinn/hls-pull-push';
+import path from 'path';
 
 export function getOutputDest({
   pullPushService,
@@ -71,11 +72,18 @@ export function getOutputDest({
       pullPushService.getLogger().verbose(`${destinationUrl.toString()}`);
       const s3Plugin = new S3BucketOutput();
       pullPushService.registerPlugin(destinationType, s3Plugin);
+      const dest = path.parse(destinationUrl.pathname);
+      const opts = {
+        bucket: destinationUrl.hostname,
+        folder:
+          dest.ext !== '.m3u8'
+            ? destinationUrl.pathname.replace(/^\//, '').replace(/\/$/, '')
+            : dest.dir.replace(/^\//, ''),
+        outputIndexFilename: dest.ext === '.m3u8' ? dest.base : undefined
+      };
+      console.log(opts);
       outputDest = s3Plugin.createOutputDestination(
-        {
-          bucket: destinationUrl.hostname,
-          folder: destinationUrl.pathname.replace(/\/$/, '').replace(/^\//, '')
-        },
+        opts,
         pullPushService.getLogger()
       );
     }
